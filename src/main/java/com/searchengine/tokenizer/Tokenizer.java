@@ -42,7 +42,12 @@ public class Tokenizer {
             return word.substring(0, word.length() - 2);
         }
         if (word.endsWith("ing") && word.length() > 5) {
-            return word.substring(0, word.length() - 3);
+            String base = word.substring(0, word.length() - 3);
+            // Strip doubled trailing consonant (e.g. running -> runn -> run)
+            if (base.length() >= 2 && base.charAt(base.length() - 1) == base.charAt(base.length() - 2)) {
+                base = base.substring(0, base.length() - 1);
+            }
+            return base;
         }
         if (word.endsWith("tion") && word.length() > 5) {
             return word.substring(0, word.length() - 4) + "t";
