@@ -1,0 +1,7 @@
+An algorithm is a finite sequence of rigorous instructions, typically used to solve a class
+of specific problems or to perform a computation. Algorithms are used as specifications for
+performing calculations and data processing. More advanced algorithms can use conditionals
+to divert the code execution through various routes and deduce valid inferences. Sorting
+algorithms arrange elements in a particular order. Search algorithms find specific items
+within data structures. Graph algorithms solve problems related to graph theory, such as
+finding the shortest path between nodes.

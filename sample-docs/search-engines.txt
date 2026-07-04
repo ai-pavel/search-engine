@@ -1,0 +1,8 @@
+A search engine is a software system designed to carry out web searches. They search the
+World Wide Web in a systematic way for particular information specified in a textual web
+search query. The search results are generally presented in a line of results, often
+referred to as search engine results pages. An inverted index is a database index storing
+a mapping from content, such as words or numbers, to its locations in a set of documents.
+The purpose of an inverted index is to allow fast full-text searches at a cost of increased
+processing when a document is added to the database. TF-IDF is a numerical statistic that
+reflects how important a word is to a document in a collection or corpus.
