@@ -1,5 +1,7 @@
 # Search Engine
 
+[![CI](https://github.com/pavel-genai/search-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/pavel-genai/search-engine/actions/workflows/ci.yml)
+
 A Java 17 inverted index search engine with TF-IDF ranking, boolean query support, and a REST API powered by Spring Boot.
 
 ## Features
