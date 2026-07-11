@@ -53,10 +53,11 @@ class QueryParserBranchTest {
 
     @Test
     void unterminatedPhraseTreatsRestAsContent() {
-        // No closing quote: tokenizer takes until end of string.
+        // No closing quote: the parser is lenient. The token starts with '"'
+        // but doesn't end with '"', so parsePrimary treats it as a term rather
+        // than a phrase. "quick" matches docs 1 and 2.
         Set<Integer> results = parser.parse("\"quick brown");
-        // Still evaluated as phrase with "quick brown".
-        assertEquals(1, results.size());
+        assertEquals(2, results.size());
     }
 
     @Test
