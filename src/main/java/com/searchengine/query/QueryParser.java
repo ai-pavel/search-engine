@@ -69,7 +69,7 @@ public class QueryParser {
             }
             if (c == '"') {
                 int end = query.indexOf('"', i + 1);
-                if (end == -1) end = query.length();
+                if (end == -1) end = query.length() - 1;
                 tokens.add(query.substring(i, end + 1));
                 i = end + 1;
             } else {
