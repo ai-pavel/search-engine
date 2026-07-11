@@ -38,51 +38,50 @@ class CliRunnerTest {
 
     @Test
     void noArgsPrintsUsageAndExitsOne() {
-        ByteArrayOutputStream err = new ByteArrayOutputStream();
-        System.setErr(new PrintStream(err));
-        CliRunner.run(new String[]{});
-        assertTrue(err.toString().contains("Usage"));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+        int code = CliRunner.runReturningExitCode(new String[]{});
+        assertEquals(1, code);
+        assertTrue(out.toString().contains("Usage"));
     }
 
     @Test
     void nonexistentDirectoryExitsOne() {
         ByteArrayOutputStream err = new ByteArrayOutputStream();
         System.setErr(new PrintStream(err));
-        CliRunner.run(new String[]{"/no/such/dir/here"});
+        int code = CliRunner.runReturningExitCode(new String[]{"/no/such/dir/here"});
+        assertEquals(1, code);
         assertTrue(err.toString().contains("not a directory"));
     }
 
     @Test
     void emptyDirectoryExitsZero(@TempDir Path tempDir) throws IOException {
-        // Directory exists but has no .txt files.
         Files.createDirectory(tempDir.resolve("subdir"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
-        CliRunner.run(new String[]{tempDir.toString()});
+        int code = CliRunner.runReturningExitCode(new String[]{tempDir.toString()});
+        assertEquals(0, code);
         assertTrue(out.toString().contains("No .txt files found."));
     }
 
     @Test
     void indexesFilesAndSearches(@TempDir Path tempDir) throws IOException {
-        // Create two .txt files to index.
         Files.writeString(tempDir.resolve("a.txt"), "java spring programming");
         Files.writeString(tempDir.resolve("b.txt"), "python flask programming");
 
-        // Provide a search query and then quit on stdin.
         String input = "programming\njava\nquit\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        CliRunner.run(new String[]{tempDir.toString()});
+        int code = CliRunner.runReturningExitCode(new String[]{tempDir.toString()});
+        assertEquals(0, code);
         String output = out.toString();
 
-        assertTrue(output.contains("Indexed"), "should list indexed files: " + output);
+        assertTrue(output.contains("Indexed"), output);
         assertTrue(output.contains("Indexed " + 2 + " documents"), output);
-        assertTrue(output.contains("search>"), "should print prompt: " + output);
-        // First query "programming" matches both docs; result list should be present.
+        assertTrue(output.contains("search>"), output);
         assertTrue(output.contains("Found"), output);
-        // "java" matches doc 1.
         assertTrue(output.contains("java"), output);
         assertTrue(output.contains("Goodbye"), output);
     }
@@ -95,8 +94,8 @@ class CliRunnerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        CliRunner.run(new String[]{tempDir.toString()});
-        // No result output between the prompts.
+        int code = CliRunner.runReturningExitCode(new String[]{tempDir.toString()});
+        assertEquals(0, code);
         assertTrue(out.toString().contains("Goodbye"));
     }
 
@@ -108,7 +107,8 @@ class CliRunnerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        CliRunner.run(new String[]{tempDir.toString()});
+        int code = CliRunner.runReturningExitCode(new String[]{tempDir.toString()});
+        assertEquals(0, code);
         assertTrue(out.toString().contains("Goodbye"));
     }
 
@@ -120,7 +120,8 @@ class CliRunnerTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        CliRunner.run(new String[]{tempDir.toString()});
+        int code = CliRunner.runReturningExitCode(new String[]{tempDir.toString()});
+        assertEquals(0, code);
         assertTrue(out.toString().contains("No results found."));
     }
 }

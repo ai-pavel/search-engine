@@ -23,17 +23,21 @@ public class CliRunner {
     private static final String INDEX_PATH = "index-data/index.ser";
 
     public static void run(String[] args) {
+        System.exit(runReturningExitCode(args));
+    }
+
+    public static int runReturningExitCode(String[] args) {
         if (args.length == 0) {
             System.out.println("Usage: --cli <directory-of-txt-files>");
             System.out.println("  Indexes all .txt files in the given directory.");
-            System.exit(1);
+            return 1;
         }
 
         String dirPath = args[0];
         File dir = new File(dirPath);
         if (!dir.isDirectory()) {
             System.err.println("Error: " + dirPath + " is not a directory.");
-            System.exit(1);
+            return 1;
         }
 
         IndexPersistence persistence = new IndexPersistence(INDEX_PATH);
@@ -44,7 +48,7 @@ public class CliRunner {
         File[] files = dir.listFiles((d, name) -> name.endsWith(".txt"));
         if (files == null || files.length == 0) {
             System.out.println("No .txt files found.");
-            System.exit(0);
+            return 0;
         }
 
         for (File file : files) {
@@ -98,5 +102,6 @@ public class CliRunner {
         }
         scanner.close();
         System.out.println("Goodbye.");
+        return 0;
     }
 }
