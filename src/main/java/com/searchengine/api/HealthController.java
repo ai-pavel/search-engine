@@ -14,7 +14,7 @@ public class HealthController {
     public ResponseEntity<Map<String, Object>> health() {
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("status", "ok");
-        response.put("service", "search-engine");
+        response.put("service", "prospector");
         return ResponseEntity.ok(response);
     }
 }

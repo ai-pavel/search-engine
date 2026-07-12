@@ -22,6 +22,6 @@ class HealthControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.status").value("ok"))
-                .andExpect(jsonPath("$.service").value("search-engine"));
+                .andExpect(jsonPath("$.service").value("prospector"));
     }
 }
